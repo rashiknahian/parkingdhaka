@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+</head>
+<body>
+{% load crispy_forms_tags %}
+{% if signup_form %}
+<h3>{{ pageTitle }}</h3>
+<div class="row">
+    <form method="post" class="uniForm" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="col-sm-4">
+            <h4>User Info:</h4>
+            {{ form.userName|as_crispy_field   }}
+            {{ form.userPass|as_crispy_field   }}
+            {{ form.userPass2|as_crispy_field }}
+            {{ form.email|as_crispy_field   }}
+            {{ form.phone|as_crispy_field   }}
+            {{ form.picture|as_crispy_field   }}
+        </div>
+
+        <div class="col-sm-4">
+            <h4>Personal Info:</h4>
+            {{ form.occupation|as_crispy_field }}
+            {{ form.firstName|as_crispy_field }}
+            {{ form.lastName|as_crispy_field }}
+            {{ form.presentAddress|as_crispy_field }}
+            {{ form.permanentAddress|as_crispy_field }}
+        </div>
+        <div class="col-sm-4">
+            <h4>Registration Info:</h4>
+            {{ form.NID|as_crispy_field  }}
+            {{ form.drivingLicense|as_crispy_field  }}
+            {{ form.Registration|as_crispy_field  }}
+            {{ form.vehicleType|as_crispy_field  }}
+            {{ form.vehicleCC|as_crispy_field  }}
+        </div>
+        <input type="submit" class="btn btn-success" value="{{ submitType }}">
+    </form>
+</div>
+<a href="{% url location %}"><button type="button" class="btn btn-success"> {{ togglePage }} </button></a>
+{% endif %}
+
+{% if login_form %}
+<h3>{{ pageTitle }}</h3>
+<div class="row">
+    <form method="post" class="uniForm" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-success" value="{{ submitType }}">
+    </form>
+</div>
+<a href="{% url location %}"><button type="button" class="btn btn-success"> {{ togglePage }} </button></a>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+<h3>Welcome, {{ request.user }}</h3>
+<br>
+<a href="{% url 'userLogout' %}"><button type="button" class="btn btn-warning"> logout </button></a>
+{% endif %}
+</body>
+</html>
